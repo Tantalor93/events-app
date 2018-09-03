@@ -1,5 +1,7 @@
 package com.github.tantalor93.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -11,7 +13,9 @@ public class EventToCreate {
 
     private final String type;
 
-    public EventToCreate(final String userId, final String type) {
+    @JsonCreator
+    public EventToCreate(@JsonProperty("userId") final String userId,
+                         @JsonProperty("type") final String type) {
         this.userId = userId;
         this.type = type;
     }

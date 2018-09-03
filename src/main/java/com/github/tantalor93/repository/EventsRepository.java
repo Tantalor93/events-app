@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface EventsRepository extends CrudRepository<EventEntity, String> {
     List<EventEntity> findAllByUserId(final String userId);
+
+    List<EventEntity> findAll();
+
 }

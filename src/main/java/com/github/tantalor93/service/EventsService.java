@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,5 +37,23 @@ public class EventsService {
                                 eventEntity.getType()
                         ))
                 .collect(Collectors.toList());
+    }
+
+    public List<Event> findAllEvents() {
+        return eventsRepository.findAll()
+                .stream()
+                .map(eventEntity ->
+                        new Event(
+                                eventEntity.getId(),
+                                eventEntity.getUserId(),
+                                eventEntity.getType()
+                        )
+                )
+                .collect(Collectors.toList());
+    }
+
+    public Optional<Event> findEventById(final String id) {
+        return eventsRepository.findById(id)
+                .map(e -> new Event(e.getId(), e.getUserId(), e.getType()));
     }
 }
