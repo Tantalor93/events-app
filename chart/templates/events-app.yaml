@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: events-app
+    labels:
+       app: events-app
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: events-app
+    template:
+        metadata:
+            labels:
+                app: events-app
+        spec:
+            containers:
+              - name: events-app-container
+                image: tantalor93/events-app
+                imagePullPolicy: IfNotPresent
+                ports:
+                - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: events-app
+  labels:
+    app: events-app
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: events-app
