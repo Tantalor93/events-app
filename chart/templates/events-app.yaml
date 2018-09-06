@@ -17,9 +17,21 @@ spec:
             containers:
               - name: events-app-container
                 image: tantalor93/events-app
-                imagePullPolicy: IfNotPresent
+                imagePullPolicy: Always
                 ports:
                 - containerPort: 8080
+                livenessProbe:
+                  httpGet:
+                    path: /actuator/info
+                    port: 8080
+                  initialDelaySeconds: 30
+                  periodSeconds: 10
+                readinessProbe:
+                  httpGet:
+                    path: /actuator/health
+                    port: 8080
+                  initialDelaySeconds: 30
+                  periodSeconds: 10
 ---
 apiVersion: v1
 kind: Service
